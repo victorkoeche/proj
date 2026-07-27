@@ -6,12 +6,13 @@
 #include <errno.h>
 #include "filesystem_linux.h"
 
-#define SIZE 100
+#define SIZE 1000
 
 int create_directory(const char* dir){
+
     if(dir == NULL){
         errno = EINVAL;
-        perror("BUILD-DIRECTORY");
+        perror("Create directory");
         return -1;
     }
 
@@ -20,19 +21,16 @@ int create_directory(const char* dir){
         return 0;
     }else{
         if(errno == EEXIST){
-            perror("create_directory");
-            return -2;
+            return 1;
         }else{
-            perror("Error creating directory");
-            return -3;
+            return -2;
         }
     }
 }
 
 int create_file(const char* dir, const char* arq){
+
     if(dir == NULL || arq == NULL){
-        errno = EINVAL;
-        perror("Create File");
         return -1;
     }
 
@@ -42,8 +40,7 @@ int create_file(const char* dir, const char* arq){
 
     FILE *file = fopen(buffer, "w");
     if(file == NULL){
-        perror("Error opening arquive");
-        return -1;
+        return -2;
     }
 
     fclose(file);
@@ -52,6 +49,7 @@ int create_file(const char* dir, const char* arq){
 }
 
 int create_folder(const char* dir, const char* folder){
+
     if(dir == NULL || folder == NULL){
         errno = EINVAL;
         perror("Create Folder");
@@ -61,7 +59,6 @@ int create_folder(const char* dir, const char* folder){
     char buffer[SIZE];
 
     snprintf(buffer, sizeof(buffer), "%s/%s", dir, folder);
-    create_directory(buffer);
-    
-    return 0;
+
+   return create_directory(buffer);
 }
