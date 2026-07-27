@@ -16,11 +16,15 @@ The main goal of **Proj** is to quickly scaffold your workspace via the command 
 
 --- 
 
-## 💡 Motivation This project was born out of my own necessity: I wanted a tool that could automatically create an organized, standardized structure for my new projects, eliminating the manual boilerplate setup every time I started something new. 
+## 💡 Motivation 
+
+This project was born out of my own necessity: I wanted a tool that could automatically create an organized, standardized structure for my new projects, eliminating the manual boilerplate setup every time I started something new. 
 
 --- 
 
-## 🗺️ Roadmap Here are the features planned for the development of **Proj**: 
+## 🗺️ Roadmap 
+
+Here are the features planned for the development of **Proj**: 
 
 - [x] Create project folder 
 - [x] Generate standard README.md 
