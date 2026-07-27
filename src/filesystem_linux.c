@@ -6,6 +6,8 @@
 #include <errno.h>
 #include "filesystem_linux.h"
 
+#define SIZE 100
+
 int create_directory(const char* dir){
     if(dir == NULL){
         errno = EINVAL;
@@ -25,4 +27,26 @@ int create_directory(const char* dir){
             return -3;
         }
     }
+}
+
+int create_readme(const char* dir){
+    if(dir == NULL){
+        errno = EINVAL;
+        perror("Create README");
+        return -1;
+    }
+
+    char buffer[SIZE];
+
+    snprintf(buffer, sizeof(buffer), "%s/README.md", dir);
+
+    FILE *readme = fopen(buffer, "w");
+    if(readme == NULL){
+        perror("Error opening README.md");
+        return -1;
+    }
+
+    fclose(readme);
+
+    return 0;
 }

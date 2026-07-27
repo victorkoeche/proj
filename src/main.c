@@ -7,10 +7,8 @@
 
 int main(int argc, char *argv[]){
 
-    if(argc <= 1 || strcmp(argv[1], "proj") == 1){
-        fprintf(stderr, "You should call 'proj' in your command as the first token.\n");
-        return -1;
-    }
+    printf("%s\n", argv[0]);
+    printf("%s\n", argv[1]);
 
     int create = 0;
     int edit = 0;
@@ -36,7 +34,8 @@ int main(int argc, char *argv[]){
 
     if(create == 1){
         char* dir = strcpy(buffer, argv[arg_dir]);
-        int status = create_directory(dir);
+        int status_directory = create_directory(dir);
+        int status_readme = create_readme(dir);
     }
 
     return 0;
