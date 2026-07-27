@@ -6,12 +6,10 @@
 #include "filesystem_linux.h"
 #include "project.h"
 
-#define SIZE 1000
 
 int main(int argc, char *argv[]){
 
     int create = 0;
-    char buffer[SIZE];
     int arg_dir;
 
     for(int i = 1; i < argc; i++){

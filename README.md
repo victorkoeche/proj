@@ -1,20 +1,33 @@
-# proj
+# 🚀 Proj 
+> **A simple and fast project scaffolding CLI tool.** 
 
-## -'proj' is a personal project that has the objective of facilitating the creation of a structured project scaffold. 
+**Proj** is a personal tool designed to automate the creation of initial project structures. With a single command, it generates the foundation you need to start coding immediately—saving you time on repetitive initial setups. 
 
-## Features
+--- 
 
+## ✨ Features The main goal of **Proj** is to quickly scaffold your workspace via the command line. It automatically creates:
 
-#### The main idea is that it creates, by command-line, the initial structure to start coding, like a template for the Makefile, the README, and the folders that would be nice to have as a scaffolding. 
+* **Initial Templates:** Standard Makefile, README.md, and .gitignore. 
+* **Folder Structure:** Essential directories like src/ and include/. 
+* **Version Control:** Automatic Git repository initialization. 
 
-## Motivation
-#### It was born out of my own necessity of having a tool that automatically creates an organized structure for my projects.
+--- 
 
-## Roadmap
-- [ ] Create project folder 
-- [ ] Create README
-- [ ] Create Makefile
-- [ ] Create .gitignore
-- [ ] Create src/ and include/
-- [ ] Initialize Git repository
-- [ ] Support templates
+## 💡 Motivation This project was born out of my own necessity: I wanted a tool that could automatically create a organized, standardized structure for my new projects, eliminating the manual boilerplate setup every time I started something new. 
+
+--- 
+
+## 🗺️ Roadmap Here are the features planned for the development of **Proj**: 
+
+- [x] Create project folder 
+- [x] Generate standard README.md 
+- [x] Generate standard Makefile 
+- [x] Generate standard .gitignore 
+- [x] Create src/ and include/ directory structure 
+- [ ] Support custom project templates 
+- [ ] Initialize Git repository 
+- [ ] Support different programming languages
+
+--- 
+
+## 🛠️ Usage (Coming Soon)
