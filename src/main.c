@@ -35,7 +35,12 @@ int main(int argc, char *argv[]){
     if(create == 1){
         char* dir = strcpy(buffer, argv[arg_dir]);
         int status_directory = create_directory(dir);
-        int status_readme = create_readme(dir);
+        int status_readme = create_file(dir, "README.md");
+        int status_makefile = create_file(dir, "Makefile");
+        int status_gitignore = create_file(dir, ".gitignore");
+        int status_license = create_file(dir, "LICENSE");
+        int status_src = create_folder(dir, "src");
+        int status_include = create_folder(dir, "include");
     }
 
     return 0;

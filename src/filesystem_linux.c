@@ -29,24 +29,39 @@ int create_directory(const char* dir){
     }
 }
 
-int create_readme(const char* dir){
-    if(dir == NULL){
+int create_file(const char* dir, const char* arq){
+    if(dir == NULL || arq == NULL){
         errno = EINVAL;
-        perror("Create README");
+        perror("Create File");
         return -1;
     }
 
     char buffer[SIZE];
 
-    snprintf(buffer, sizeof(buffer), "%s/README.md", dir);
+    snprintf(buffer, sizeof(buffer), "%s/%s", dir, arq);
 
-    FILE *readme = fopen(buffer, "w");
-    if(readme == NULL){
-        perror("Error opening README.md");
+    FILE *file = fopen(buffer, "w");
+    if(file == NULL){
+        perror("Error opening arquive");
         return -1;
     }
 
-    fclose(readme);
+    fclose(file);
 
+    return 0;
+}
+
+int create_folder(const char* dir, const char* folder){
+    if(dir == NULL || folder == NULL){
+        errno = EINVAL;
+        perror("Create Folder");
+        return -1;
+    }
+
+    char buffer[SIZE];
+
+    snprintf(buffer, sizeof(buffer), "%s/%s", dir, folder);
+    create_directory(buffer);
+    
     return 0;
 }
