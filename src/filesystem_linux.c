@@ -35,7 +35,7 @@ int create_directory(const char* dir){
     }
 
     if(mkdir(dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0){
-        printf("Directory '%s' created successfully.\n", dir);
+        //printf("Directory '%s' created successfully.\n", dir);
         return 0;
     }else{
         return -2;

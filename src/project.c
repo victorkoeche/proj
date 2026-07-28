@@ -109,8 +109,8 @@ int init_project(const char* dir){
         return 0;
     }
 
+    printf("Project initialized.\n");
     return 0;
-
 }
 
 int create_project(const char* project_dir){
