@@ -8,6 +8,19 @@
 
 #define SIZE 1000
 
+int path_exists(const char* path){
+
+    if(path == NULL){
+        errno = EINVAL;
+        perror("Path verify");
+        return -1;
+    }
+
+    struct stat buffer;
+
+    return(stat(path, &buffer) == 0);
+}
+
 int create_directory(const char* dir){
 
     if(dir == NULL){
@@ -16,15 +29,16 @@ int create_directory(const char* dir){
         return -1;
     }
 
+    if(path_exists(dir)){
+        errno = EEXIST;
+        return 1;
+    }
+
     if(mkdir(dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == 0){
         printf("Directory '%s' created successfully.\n", dir);
         return 0;
     }else{
-        if(errno == EEXIST){
-            return 1;
-        }else{
-            return -2;
-        }
+        return -2;
     }
 }
 

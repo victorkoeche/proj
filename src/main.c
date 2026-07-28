@@ -9,20 +9,18 @@
 
 int main(int argc, char *argv[]){
 
-    int create = 0;
-    int arg_dir;
 
     for(int i = 1; i < argc; i++){
         if(strcmp(argv[i], "create") == 0 && i < argc - 1){
             printf("Creating...\n");
-            create = 1;
-            arg_dir = i + 1;
+            create_project(argv[i + 1]);
+        }
+        else if(strcmp(argv[i], "init") == 0){
+            printf("Initializing...\n\n");
+            init_project(".");
         }
     }
 
-    if(create == 1){
-        create_project(argv[arg_dir]);
-    }
 
     return 0;
 }
