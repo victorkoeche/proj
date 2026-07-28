@@ -26,14 +26,16 @@ This project was born out of my own necessity: I wanted a tool that could automa
 
 Here are the features planned for the development of **Proj**: 
 
-- [x] Create project folder 
-- [x] Generate standard README.md 
-- [x] Generate standard Makefile 
-- [x] Generate standard .gitignore 
-- [x] Create src/ and include/ directory structure 
-- [ ] Support custom project templates 
-- [ ] Initialize Git repository 
-- [ ] Support different programming languages
+- [x] Create project folder
+- [x] Generate basic project files
+- [x] Create `src/` and `include/` structure
+- [x] Add `create` command
+- [x] Add `init` command
+- [x] Add `--help` support
+- [x] Add version system
+- [ ] Generate file templates
+- [ ] Support multiple programming languages
+- [ ] Initialize Git repository automatically
 
 --- 
 
