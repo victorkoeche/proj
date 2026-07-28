@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <errno.h>
 #include "filesystem_linux.h"
+#include "version.h"
 
 #define SIZE 1000
 
@@ -132,4 +133,35 @@ int create_project(const char* project_dir){
     }
     
     return init_project(project_dir);
+}
+
+void show_help(void)
+{
+    printf(
+        "\n"
+        "┌─────────────────────────────────────────────┐\n"
+        "│                  PROJ v%s                │\n"
+        "│      A simple project scaffolding tool      │\n"
+        "└─────────────────────────────────────────────┘\n"
+        "\n"
+        "USAGE\n"
+        "    proj <command> [options]\n"
+        "\n"
+        "COMMANDS\n"
+        "    create <name>    Create a new project\n"
+        "    init             Initialize current directory\n"
+        "    help             Show help information\n"
+        "\n"
+        "OPTIONS\n"
+        "    -h, --help       Show help\n"
+        "    -v, --version    Show version\n"
+        "\n"
+        "EXAMPLES\n"
+        "    proj create my_app\n"
+        "    proj init\n"
+        "\n"
+        "For more information:\n"
+        "    github.com/victorkoeche/proj\n"
+        "\n"
+    , PROJ_VERSION);
 }

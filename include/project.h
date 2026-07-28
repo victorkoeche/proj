@@ -3,5 +3,6 @@
 
 int init_project(const char* dir);
 int create_project(const char* project_name);
+void show_help(void);
 
 #endif

@@ -5,12 +5,12 @@
 
 #include "filesystem_linux.h"
 #include "project.h"
-
+#include "version.h"
 
 int main(int argc, char *argv[]){
 
     if(argc <= 1){
-        printf("Sorry, too few arguments. Try: 'proj -help'.\n");
+        printf("Sorry, too few arguments. Try: 'proj --help'.\n");
         return 1;
     }
 
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
                 printf("Creating...\n");
                 return create_project(argv[i + 1]);
             }else{
-                printf("Sorry, too few arguments. Try: 'proj -help'.\n");
+                printf("Sorry, too few arguments. Try: 'proj --help'.\n");
                 return 1;
             }
         }
@@ -33,14 +33,20 @@ int main(int argc, char *argv[]){
                 if(input == 'Y' || input == 'y'){
                     return create_project(argv[i + 1]);
                 }else{
-                    printf("Sorry, 'init' does not accept any arguments. Try: 'proj -help'.\n");
+                    printf("Sorry, 'init' does not accept any arguments. Try: 'proj --help'.\n");
                     return 1;
                 }
             }
             printf("Initializing...\n\n");
             return init_project(".");
+        }
+        else if(strcmp(argv[i], "--help")== 0 || strcmp(argv[i], "-h") == 0){
+            show_help();
+            return 0;
+        }else if(strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0){
+            printf("proj version %s\n", PROJ_VERSION);
         }else{
-            printf("Unknown command: %s.\nTry:\n 'proj -help'\n", argv[i]);
+            printf("Unknown command: %s.\nTry:\n 'proj --help'\n", argv[i]);
             return 1;
         }
     }
