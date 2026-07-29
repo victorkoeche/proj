@@ -42,18 +42,23 @@ int create_directory(const char* dir){
     }
 }
 
-int create_file(const char* dir, const char* arq){
+int create_file(const char* dir, const char* file_name){
 
-    if(dir == NULL || arq == NULL){
+    if(dir == NULL || file_name == NULL){
         return -1;
     }
 
     char buffer[SIZE];
 
-    snprintf(buffer, sizeof(buffer), "%s/%s", dir, arq);
+    snprintf(buffer, sizeof(buffer), "%s/%s", dir, file_name);
+
+    if(path_exists(buffer)){
+        return 1;
+    }
 
     FILE *file = fopen(buffer, "w");
     if(file == NULL){
+        errno = ENOENT;
         return -2;
     }
 

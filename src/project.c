@@ -19,95 +19,78 @@ int init_project(const char* dir){
 
     int total_items = 6;
     int skipped = 0;
-    char buffer[SIZE];
 
-    snprintf(buffer, sizeof(buffer), "%s/README.md", dir);
+    int status_readme = create_file(dir, "README.md");
+    int status_makefile = create_file(dir, "Makefile");
+    int status_gitignore = create_file(dir, ".gitignore");
+    int status_license = create_file(dir, "LICENSE");
+    int status_src = create_folder(dir, "src");
+    int status_include = create_folder(dir, "include");
 
-    if(path_exists(buffer)){
-        printf("README.md already exists. Skipped.\n");
-        skipped++;
-    }else{
-        int status_readme = create_file(dir, "README.md");
+        if(status_readme == 1){
+            skipped++;
+        }
 
-        if(status_readme != 0){
+        if(status_readme != 0 && status_readme != 1){
             //printf("Warning: function returned  %d\n", status_readme);
-            perror("Error creating README");
+            fprintf(stderr, "Error creating README");
         }
-    }
 
-    snprintf(buffer, sizeof(buffer), "%s/Makefile", dir);
+        if(status_makefile == 1){
+            skipped++;
+        }
 
-    if(path_exists(buffer)){
-        printf("Makefile already exists. Skipped.\n");
-        skipped++;
-    }else{
-        int status_makefile = create_file(dir, "Makefile");
-
-        if(status_makefile != 0){
+        if(status_makefile != 0 && status_makefile != 1){
             //printf("Warning: function returned  %d\n", status_makefile);
-            perror("Error creating Makefile");
+            fprintf(stderr, "Error creating Makefile");
         }
-    }
 
-    snprintf(buffer, sizeof(buffer), "%s/.gitignore", dir);
+        if(status_gitignore == 1){
+            skipped++;
+        }
 
-    if(path_exists(buffer)){
-        printf(".gitignore already exists. Skipped.\n");
-        skipped++;
-    }else{
-        int status_gitignore = create_file(dir, ".gitignore");
-
-        if(status_gitignore != 0){
+        if(status_gitignore != 0 && status_gitignore != 1){
             //printf("Warning: function returned  %d\n", status_gitignore);
-            perror("Error creating .gitignore");
+            fprintf(stderr, "Error creating .gitignore");
         }
-    }
 
-    snprintf(buffer, sizeof(buffer), "%s/LICENSE", dir);
+        if(status_license == 1){
+            skipped++;
+        }
 
-    if(path_exists(buffer)){
-        printf("LICENSE already exists. Skipped.\n");
-        skipped++;
-    }else{
-        int status_license = create_file(dir, "LICENSE");
-
-        if(status_license != 0){
+        if(status_license != 0 && status_license != 1){
             //printf("Warning: function returned  %d\n", status_license);
-            perror("Error creating LICENSE");
+            fprintf(stderr, "Error creating LICENSE");
         }
-    }
+        
+        if(status_src == 1){
+            skipped++;
+        }
 
-    snprintf(buffer, sizeof(buffer), "%s/src/", dir);
-
-    if(path_exists(buffer)){
-        printf("src/ already exists. Skipped.\n");
-        skipped++;
-    }else{
-        int status_src = create_folder(dir, "src");
-            
-        if(status_src != 0){
+        if(status_src != 0 && status_src != 1){
             //printf("Warning: function returned  %d\n", status_src);
-            perror("Error creating src/");
+            fprintf(stderr, "Error creating src/");
         }
-    }
 
-    snprintf(buffer, sizeof(buffer), "%s/include/", dir);
+        if(status_include == 1){
+            skipped++;
+        }
 
-    if(path_exists(buffer)){
-        printf("include/ already exists. Skipped.\n");
-        skipped++;
-    }else{
-        int status_include = create_folder(dir, "include");
-
-        if(status_include != 0){
+        if(status_include != 0 && status_include != 1){
             //printf("Warning: function returned  %d\n", status_include);
-            perror("Error creating include/");
+            fprintf(stderr, "Error creating include/");
         }
-    }
 
     if(skipped == total_items){
         printf("\nProject already initialized.\nNothing to do.\n");
         return 0;
+    }else{
+        if(status_readme == 1) printf("README already exists. Skipping.\n");
+        if(status_makefile == 1) printf("Makefile already exists. Skipping.\n");
+        if(status_gitignore == 1) printf(".gitignore already exists. Skipping.\n");
+        if(status_license == 1) printf("LICENSE already exists. Skipping.\n");
+        if(status_src == 1) printf("src/ already exists. Skipping.\n");
+        if(status_include == 1) printf("include/ already exists. Skipping.\n");
     }
 
     printf("Project initialized.\n");
