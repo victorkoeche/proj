@@ -57,7 +57,6 @@ int create_file(const char* dir, const char* file_name){
 
     FILE *file = fopen(buffer, "w");
     if(file == NULL){
-        errno = ENOENT;
         return -2;
     }
 

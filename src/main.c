@@ -5,6 +5,7 @@
 
 #include "filesystem_linux.h"
 #include "project.h"
+#include "template.h"
 #include "version.h"
 
 int main(int argc, char *argv[]){

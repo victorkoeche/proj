@@ -1,0 +1,10 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -Wpedantic -I include
+
+SRC = $(wildcard src/*.c)
+TARGET = app
+
+all: $(TARGET)
+
+$(TARGET): $(SRC)
+$(CC) $(CFLAGS) $(SRC) -o $(TARGET)

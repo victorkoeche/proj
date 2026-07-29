@@ -4,6 +4,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+
+#include "template.h"
 #include "filesystem_linux.h"
 #include "version.h"
 
@@ -20,10 +22,10 @@ int init_project(const char* dir){
     int total_items = 6;
     int skipped = 0;
 
-    int status_readme = create_file(dir, "README.md");
-    int status_makefile = create_file(dir, "Makefile");
+    int status_readme = generate_from_template(dir, "README.md");
+    int status_makefile = generate_from_template(dir, "Makefile");
     int status_gitignore = create_file(dir, ".gitignore");
-    int status_license = create_file(dir, "LICENSE");
+    int status_license = generate_from_template(dir, "LICENSE");
     int status_src = create_folder(dir, "src");
     int status_include = create_folder(dir, "include");
 
