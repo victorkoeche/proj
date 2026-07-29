@@ -5,10 +5,35 @@
 
 #include "template.h"
 #include "filesystem_linux.h"
+#include "project.h"
 
 #define SIZE 1000
 
-int generate_from_template(const char* dir, const char* file_name){
+int replace_placeholder(char* buffer, size_t size, const char* place_holder, const char* value){
+
+    if(buffer == NULL || place_holder == NULL || value == NULL){
+        errno = EINVAL;
+        return -1;
+    }
+
+    char* pointer = strstr(buffer, place_holder);
+
+    if(pointer == NULL){
+        return 1;
+    }
+
+    char temp[SIZE];
+
+    int prefix_size = pointer - buffer;
+
+    snprintf(temp, sizeof(temp), "%.*s%s%s", prefix_size, buffer, value, pointer + strlen(place_holder));
+
+    strncpy(buffer, temp, size);
+
+    return 0;
+}
+
+int generate_from_template(const char* dir, const char* file_name, const char* project_name){
 
     if(dir == NULL || file_name == NULL){
         errno = EINVAL;
@@ -44,7 +69,11 @@ int generate_from_template(const char* dir, const char* file_name){
     }
 
     char buffer[SIZE];
+
     while(fgets(buffer, sizeof(buffer), file_read) != NULL){
+        if(strstr(buffer, "{{PROJECT_NAME}}")){
+            replace_placeholder(buffer, sizeof(buffer), "{{PROJECT_NAME}}", project_name);
+        }
         fputs(buffer, file_write);
     }
 

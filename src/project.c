@@ -11,6 +11,22 @@
 
 #define SIZE 1000
 
+const char* get_project_name(const char* dir){
+
+    if(dir == NULL){
+        errno = EINVAL;
+        return NULL;
+    }
+
+    const char* project_name = strrchr(dir, '/');
+
+    if(project_name == NULL){
+        return dir;
+    }
+
+    return project_name + 1;
+}
+
 int init_project(const char* dir){
 
     if(dir == NULL){
@@ -19,15 +35,22 @@ int init_project(const char* dir){
         return -1;
     }
 
-    int total_items = 6;
+    const char* project_name = get_project_name(dir);
+
+    char dir_src[SIZE];
+
+    snprintf(dir_src, sizeof(dir_src), "%s/src", dir);
+
+    int total_items = 7;
     int skipped = 0;
 
-    int status_readme = generate_from_template(dir, "README.md");
-    int status_makefile = generate_from_template(dir, "Makefile");
+    int status_readme = generate_from_template(dir, "README.md", project_name);
+    int status_makefile = generate_from_template(dir, "Makefile", project_name);
     int status_gitignore = create_file(dir, ".gitignore");
-    int status_license = generate_from_template(dir, "LICENSE");
+    int status_license = generate_from_template(dir, "LICENSE", project_name);
     int status_src = create_folder(dir, "src");
     int status_include = create_folder(dir, "include");
+    int status_main = generate_from_template(dir_src, "main.c", project_name);
 
         if(status_readme == 1){
             skipped++;
@@ -35,7 +58,7 @@ int init_project(const char* dir){
 
         if(status_readme != 0 && status_readme != 1){
             //printf("Warning: function returned  %d\n", status_readme);
-            fprintf(stderr, "Error creating README");
+            fprintf(stderr, "Error creating README\n");
         }
 
         if(status_makefile == 1){
@@ -44,7 +67,7 @@ int init_project(const char* dir){
 
         if(status_makefile != 0 && status_makefile != 1){
             //printf("Warning: function returned  %d\n", status_makefile);
-            fprintf(stderr, "Error creating Makefile");
+            fprintf(stderr, "Error creating Makefile\n");
         }
 
         if(status_gitignore == 1){
@@ -53,7 +76,7 @@ int init_project(const char* dir){
 
         if(status_gitignore != 0 && status_gitignore != 1){
             //printf("Warning: function returned  %d\n", status_gitignore);
-            fprintf(stderr, "Error creating .gitignore");
+            fprintf(stderr, "Error creating .gitignore\n");
         }
 
         if(status_license == 1){
@@ -62,7 +85,16 @@ int init_project(const char* dir){
 
         if(status_license != 0 && status_license != 1){
             //printf("Warning: function returned  %d\n", status_license);
-            fprintf(stderr, "Error creating LICENSE");
+            fprintf(stderr, "Error creating LICENSE\n");
+        }
+
+        if(status_main == 1){
+            skipped++;
+        }
+
+        if(status_main != 0 && status_main != 1){
+            //printf("Warning: funcion returned %d\n", status_main);
+            fprintf(stderr, "Error creating main.c\n");
         }
         
         if(status_src == 1){
@@ -71,7 +103,7 @@ int init_project(const char* dir){
 
         if(status_src != 0 && status_src != 1){
             //printf("Warning: function returned  %d\n", status_src);
-            fprintf(stderr, "Error creating src/");
+            fprintf(stderr, "Error creating src/\n");
         }
 
         if(status_include == 1){
@@ -80,7 +112,7 @@ int init_project(const char* dir){
 
         if(status_include != 0 && status_include != 1){
             //printf("Warning: function returned  %d\n", status_include);
-            fprintf(stderr, "Error creating include/");
+            fprintf(stderr, "Error creating include/\n");
         }
 
     if(skipped == total_items){
@@ -91,6 +123,7 @@ int init_project(const char* dir){
         if(status_makefile == 1) printf("Makefile already exists. Skipping.\n");
         if(status_gitignore == 1) printf(".gitignore already exists. Skipping.\n");
         if(status_license == 1) printf("LICENSE already exists. Skipping.\n");
+        if(status_main == 1) printf("main.c already exists. Skipping.\n");
         if(status_src == 1) printf("src/ already exists. Skipping.\n");
         if(status_include == 1) printf("include/ already exists. Skipping.\n");
     }
