@@ -30,7 +30,6 @@ int create_directory(const char* dir){
     }
 
     if(path_exists(dir)){
-        errno = EEXIST;
         return 1;
     }
 

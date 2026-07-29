@@ -82,7 +82,7 @@ int init_project(const char* dir){
         }
 
     if(skipped == total_items){
-        printf("\nProject already initialized.\nNothing to do.\n");
+        printf("Project already initialized.\nNothing to do.\n");
         return 0;
     }else{
         if(status_readme == 1) printf("README already exists. Skipping.\n");

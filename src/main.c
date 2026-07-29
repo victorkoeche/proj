@@ -19,7 +19,17 @@ int main(int argc, char *argv[]){
         if(strcmp(argv[i], "create") == 0){
             if(i < argc - 1){
                 printf("Creating...\n");
-                return create_project(argv[i + 1]);
+                int status = create_project(argv[i + 1]);
+                if(status == 1){
+                    printf("Project '%s' already exists.\n", argv[i + 1]);
+                    printf("Use 'proj init' inside that directory if you want to initialize it.\n");
+                    return 1;
+                }else if(status == 0){
+                    return 0;
+                }else{
+                    perror("Failed to create project");
+                    return -1;
+                }
             }else{
                 printf("Sorry, too few arguments. Try: 'proj --help'.\n");
                 return 1;
@@ -37,7 +47,7 @@ int main(int argc, char *argv[]){
                     return 1;
                 }
             }
-            printf("Initializing...\n\n");
+            printf("Initializing...\n");
             return init_project(".");
         }
         else if(strcmp(argv[i], "--help")== 0 || strcmp(argv[i], "-h") == 0){
