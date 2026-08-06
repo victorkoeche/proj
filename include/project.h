@@ -2,8 +2,8 @@
 #define PROJECT_H
 
 const char* get_project_name(const char* dir);
-int init_project(const char* dir);
-int create_project(const char* project_name);
+int init_project(const char* dir, char* lang);
+int create_project(const char* project_name, char* lang);
 void show_help(void);
 
 #endif

@@ -27,7 +27,180 @@ const char* get_project_name(const char* dir){
     return project_name + 1;
 }
 
-int init_project(const char* dir){
+int init_c(const char* dir, char* dir_src, const char* project_name){
+
+    int total_items = 7;
+    int skipped = 0;
+
+    int status_readme = generate_from_template(dir, "README.md", project_name);
+    int status_makefile = generate_from_template(dir, "Makefile", project_name);
+    int status_gitignore = create_file(dir, ".gitignore");
+    int status_license = generate_from_template(dir, "LICENSE", project_name);
+    int status_src = create_folder(dir, "src");
+    int status_include = create_folder(dir, "include");
+    int status_main = generate_from_template(dir_src, "main.c", project_name);
+
+    if(status_readme == 1){
+        skipped++;
+    }
+
+    if(status_readme != 0 && status_readme != 1){
+        //printf("Warning: function returned  %d\n", status_readme);
+        fprintf(stderr, "Error creating README\n");
+   }
+
+    if(status_makefile == 1){
+        skipped++;
+    }
+
+    if(status_makefile != 0 && status_makefile != 1){
+        //printf("Warning: function returned  %d\n", status_makefile);
+       fprintf(stderr, "Error creating Makefile\n");
+    }
+
+    if(status_gitignore == 1){
+        skipped++;
+    }
+
+    if(status_gitignore != 0 && status_gitignore != 1){
+        //printf("Warning: function returned  %d\n", status_gitignore);
+        fprintf(stderr, "Error creating .gitignore\n");
+    }
+
+    if(status_license == 1){
+        skipped++;
+    }
+
+    if(status_license != 0 && status_license != 1){
+       //printf("Warning: function returned  %d\n", status_license);
+        fprintf(stderr, "Error creating LICENSE\n");
+    }
+
+    if(status_main == 1){
+        skipped++;
+    }
+
+    if(status_main != 0 && status_main != 1){
+        //printf("Warning: funcion returned %d\n", status_main);
+        fprintf(stderr, "Error creating main.c\n");
+    }
+            
+    if(status_src == 1){
+        skipped++;
+    }
+
+    if(status_src != 0 && status_src != 1){
+        //printf("Warning: function returned  %d\n", status_src);
+        fprintf(stderr, "Error creating src/\n");
+    }
+
+    if(status_include == 1){
+        skipped++;
+    }
+
+    if(status_include != 0 && status_include != 1){
+        //printf("Warning: function returned  %d\n", status_include);
+           fprintf(stderr, "Error creating include/\n");
+    }
+    
+
+    if(skipped == total_items){
+        return 1;
+    }else{
+        if(status_readme == 1) printf("README already exists. Skipping.\n");
+        if(status_makefile == 1) printf("Makefile already exists. Skipping.\n");
+        if(status_gitignore == 1) printf(".gitignore already exists. Skipping.\n");
+        if(status_license == 1) printf("LICENSE already exists. Skipping.\n");
+        if(status_main == 1) printf("main.c already exists. Skipping.\n");
+        if(status_src == 1) printf("src/ already exists. Skipping.\n");
+        if(status_include == 1) printf("include/ already exists. Skipping.\n");
+    }
+
+    return 0;
+}
+
+int init_python(const char* dir, char* dir_src, const char* project_name){
+
+
+    int total_items = 6;
+    int skipped = 0;
+
+    int status_readme = generate_from_template(dir, "README.md", project_name);
+    int status_requirements = create_file(dir, "requirements.txt");
+    int status_gitignore = create_file(dir, ".gitignore");
+    int status_license = generate_from_template(dir, "LICENSE", project_name);
+    int status_src = create_folder(dir, "src");
+    int status_main = generate_from_template(dir_src, "main.py", project_name);
+
+    if(status_readme == 1){
+        skipped++;
+    }
+
+    if(status_readme != 0 && status_readme != 1){
+        //printf("Warning: function returned  %d\n", status_readme);
+        fprintf(stderr, "Error creating README\n");
+   }
+
+    if(status_requirements == 1){
+        skipped++;
+    }
+
+    if(status_requirements != 0 && status_requirements != 1){
+        //printf("Warning: function returned  %d\n", status_requirements);
+       fprintf(stderr, "Error creating requirements.txt\n");
+    }
+
+    if(status_gitignore == 1){
+        skipped++;
+    }
+
+    if(status_gitignore != 0 && status_gitignore != 1){
+        //printf("Warning: function returned  %d\n", status_gitignore);
+        fprintf(stderr, "Error creating .gitignore\n");
+    }
+
+    if(status_license == 1){
+        skipped++;
+    }
+
+    if(status_license != 0 && status_license != 1){
+       //printf("Warning: function returned  %d\n", status_license);
+        fprintf(stderr, "Error creating LICENSE\n");
+    }
+
+    if(status_main == 1){
+        skipped++;
+    }
+
+    if(status_main != 0 && status_main != 1){
+        //printf("Warning: funcion returned %d\n", status_main);
+        fprintf(stderr, "Error creating main.c\n");
+    }
+            
+    if(status_src == 1){
+        skipped++;
+    }
+
+    if(status_src != 0 && status_src != 1){
+        //printf("Warning: function returned  %d\n", status_src);
+        fprintf(stderr, "Error creating src/\n");
+    }
+
+    if(skipped == total_items){
+        return 1;
+    }else{
+        if(status_readme == 1) printf("README already exists. Skipping.\n");
+        if(status_requirements == 1) printf("Makefile already exists. Skipping.\n");
+        if(status_gitignore == 1) printf(".gitignore already exists. Skipping.\n");
+        if(status_license == 1) printf("LICENSE already exists. Skipping.\n");
+        if(status_main == 1) printf("main.c already exists. Skipping.\n");
+        if(status_src == 1) printf("src/ already exists. Skipping.\n");
+    }
+
+    return 0;
+}
+
+int init_project(const char* dir, char* lang){
 
     if(dir == NULL){
         errno = EINVAL;
@@ -41,98 +214,25 @@ int init_project(const char* dir){
 
     snprintf(dir_src, sizeof(dir_src), "%s/src", dir);
 
-    int total_items = 7;
-    int skipped = 0;
+    if(strcmp(lang, "c") == 0){
 
-    int status_readme = generate_from_template(dir, "README.md", project_name);
-    int status_makefile = generate_from_template(dir, "Makefile", project_name);
-    int status_gitignore = create_file(dir, ".gitignore");
-    int status_license = generate_from_template(dir, "LICENSE", project_name);
-    int status_src = create_folder(dir, "src");
-    int status_include = create_folder(dir, "include");
-    int status_main = generate_from_template(dir_src, "main.c", project_name);
-
-        if(status_readme == 1){
-            skipped++;
+        int status_c = init_c(dir, dir_src, project_name);
+        if(status_c == 1){
+            return 1;
         }
+    }else if(strcmp(lang, "python") == 0){
 
-        if(status_readme != 0 && status_readme != 1){
-            //printf("Warning: function returned  %d\n", status_readme);
-            fprintf(stderr, "Error creating README\n");
+        int status_python = init_python(dir, dir_src, project_name);
+        if(status_python == 1){
+            return 1;
         }
-
-        if(status_makefile == 1){
-            skipped++;
-        }
-
-        if(status_makefile != 0 && status_makefile != 1){
-            //printf("Warning: function returned  %d\n", status_makefile);
-            fprintf(stderr, "Error creating Makefile\n");
-        }
-
-        if(status_gitignore == 1){
-            skipped++;
-        }
-
-        if(status_gitignore != 0 && status_gitignore != 1){
-            //printf("Warning: function returned  %d\n", status_gitignore);
-            fprintf(stderr, "Error creating .gitignore\n");
-        }
-
-        if(status_license == 1){
-            skipped++;
-        }
-
-        if(status_license != 0 && status_license != 1){
-            //printf("Warning: function returned  %d\n", status_license);
-            fprintf(stderr, "Error creating LICENSE\n");
-        }
-
-        if(status_main == 1){
-            skipped++;
-        }
-
-        if(status_main != 0 && status_main != 1){
-            //printf("Warning: funcion returned %d\n", status_main);
-            fprintf(stderr, "Error creating main.c\n");
-        }
-        
-        if(status_src == 1){
-            skipped++;
-        }
-
-        if(status_src != 0 && status_src != 1){
-            //printf("Warning: function returned  %d\n", status_src);
-            fprintf(stderr, "Error creating src/\n");
-        }
-
-        if(status_include == 1){
-            skipped++;
-        }
-
-        if(status_include != 0 && status_include != 1){
-            //printf("Warning: function returned  %d\n", status_include);
-            fprintf(stderr, "Error creating include/\n");
-        }
-
-    if(skipped == total_items){
-        printf("Project already initialized.\nNothing to do.\n");
-        return 0;
-    }else{
-        if(status_readme == 1) printf("README already exists. Skipping.\n");
-        if(status_makefile == 1) printf("Makefile already exists. Skipping.\n");
-        if(status_gitignore == 1) printf(".gitignore already exists. Skipping.\n");
-        if(status_license == 1) printf("LICENSE already exists. Skipping.\n");
-        if(status_main == 1) printf("main.c already exists. Skipping.\n");
-        if(status_src == 1) printf("src/ already exists. Skipping.\n");
-        if(status_include == 1) printf("include/ already exists. Skipping.\n");
     }
 
     printf("Project initialized.\n");
     return 0;
 }
 
-int create_project(const char* project_dir){
+int create_project(const char* project_dir, char* lang){
 
     if(project_dir == NULL){
         errno = EINVAL;
@@ -144,13 +244,13 @@ int create_project(const char* project_dir){
 
     int status_directory = create_directory(dir);
 
-    if(status_directory != 0){
+    if(status_directory != 0 && status_directory != 1){
         //printf("Warning: function returned  %d", status_directory);
         perror("Error creating directory");
         return -1;
     }
     
-    return init_project(project_dir);
+    return init_project(project_dir, lang);
 }
 
 void show_help(void)
