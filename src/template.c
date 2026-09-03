@@ -44,9 +44,16 @@ int generate_from_template(const char* dir, const char* file_name, const char* p
     char template_path[SIZE];
     char file_path[SIZE];
 
-    // TODO: resolve template path relative to the executable location
+    const char* home = getenv("HOME");
 
-    snprintf(template_path, sizeof(template_path), "./templates/%s.template", file_name);
+    if (home == NULL) {
+        errno = ENOENT;
+        perror("HOME");
+        return -1;
+    }
+
+    // TODO: resolve template path relative to the executable location
+    snprintf(template_path, sizeof(template_path),"%s/.local/share/proj/templates/%s.template",home,file_name);
     snprintf(file_path, sizeof(file_path), "%s/%s", dir, file_name);
 
     int status = create_file(dir, file_name);
