@@ -28,7 +28,8 @@ int replace_placeholder(char* buffer, size_t size, const char* place_holder, con
 
     snprintf(temp, sizeof(temp), "%.*s%s%s", prefix_size, buffer, value, pointer + strlen(place_holder));
 
-    strncpy(buffer, temp, size);
+    strncpy(buffer, temp, size - 1);
+    buffer[size - 1] = '\0';
 
     return 0;
 }
@@ -52,25 +53,24 @@ int generate_from_template(const char* dir, const char* file_name, const char* p
         return -1;
     }
 
-    // TODO: resolve template path relative to the executable location
     snprintf(template_path, sizeof(template_path),"%s/.local/share/proj/templates/%s.template",home,file_name);
     snprintf(file_path, sizeof(file_path), "%s/%s", dir, file_name);
 
-    int status = create_file(dir, file_name);
-
-    if(status != 0){
-        return status;
+    if(path_exists(file_path)){
+        return 1;
     }
 
     FILE *file_read = fopen(template_path, "r");
 
     if(file_read == NULL){
+        perror("Template read");
         return -2;
     }
 
     FILE *file_write = fopen(file_path, "w");
 
     if(file_write == NULL){
+        perror("Destination file create");
         fclose(file_read);
         return -2;
     }
@@ -78,9 +78,7 @@ int generate_from_template(const char* dir, const char* file_name, const char* p
     char buffer[SIZE];
 
     while(fgets(buffer, sizeof(buffer), file_read) != NULL){
-        if(strstr(buffer, "{{PROJECT_NAME}}")){
-            replace_placeholder(buffer, sizeof(buffer), "{{PROJECT_NAME}}", project_name);
-        }
+        while(replace_placeholder(buffer, sizeof(buffer), "{{PROJECT_NAME}}", project_name) == 0);
         fputs(buffer, file_write);
     }
 
