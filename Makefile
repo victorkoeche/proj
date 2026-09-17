@@ -1,29 +1,41 @@
-CC = gcc
+CC ?= gcc
+CFLAGS ?= -Wall -Wextra -Wpedantic -O2
+CPPFLAGS = -Iinclude
 
-CFLAGS = -Wall -Wextra -I include
-
-SRC = src/main.c src/project.c src/filesystem_linux.c src/template.c src/commands.c
+SRC_DIR = src
+BUILD_DIR = build
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 TARGET = proj
 
-PREFIX = $(HOME)/.local
+PREFIX ?= $(HOME)/.local
+BINDIR = $(PREFIX)/bin
 DATADIR = $(PREFIX)/share/proj
+
+.PHONY: all clean install uninstall
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+$(TARGET): $(OBJ)
+	$(CC) $(OBJ) -o $@
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 install: $(TARGET)
-	mkdir -p $(PREFIX)/bin
-	mkdir -p $(DATADIR)/templates
-	cp $(TARGET) $(PREFIX)/bin/$(TARGET)
+	install -d $(BINDIR)
+	install -m 755 $(TARGET) $(BINDIR)/$(TARGET)
+	install -d $(DATADIR)/templates
 	cp -r templates/* $(DATADIR)/templates/
 
 uninstall:
-	rm -f $(PREFIX)/bin/$(TARGET)
+	rm -f $(BINDIR)/$(TARGET)
 	rm -rf $(DATADIR)
 
 clean:
-	rm -f $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET)
 
